@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
 print=""
 if [ "$1" = "-" ]; then
@@ -46,32 +46,32 @@ if [ -z "$print" ]; then
     ;;
   esac
 
-  { echo "# Load rbenv automatically by adding"
+  { echo "# Load Renv automatically by adding"
     echo "# the following to ${profile}:"
     echo
-    echo 'eval "$(rbenv init -)"'
+    echo 'eval "$(Renv init -)"'
     echo
   } >&2
 
   exit 1
 fi
 
-mkdir -p "${RBENV_ROOT}/"{shims,versions}
+mkdir -p "${RENV_ROOT}/"{shims,versions}
 
-echo 'export PATH="'${RBENV_ROOT}'/shims:${PATH}"'
+echo 'export PATH="'${RENV_ROOT}'/shims:${PATH}"'
 
 case "$shell" in
 bash | zsh )
-  echo "source \"$root/completions/rbenv.${shell}\""
+  echo "source \"$root/completions/Renv.${shell}\""
   ;;
 esac
 
-echo 'rbenv rehash 2>/dev/null'
+echo 'Renv rehash 2>/dev/null'
 
-commands=(`rbenv commands --sh`)
+commands=(`Renv commands --sh`)
 IFS="|"
 cat <<EOS
-function rbenv() {
+function Renv() {
   command="\$1"
   if [ "\$#" -gt 0 ]; then
     shift
@@ -79,9 +79,9 @@ function rbenv() {
 
   case "\$command" in
   ${commands[*]})
-    eval \`rbenv "sh-\$command" "\$@"\`;;
+    eval \`Renv "sh-\$command" "\$@"\`;;
   *)
-    command rbenv "\$command" "\$@";;
+    command Renv "\$command" "\$@";;
   esac
 }
 EOS

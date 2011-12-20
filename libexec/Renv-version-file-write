@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+RENV_VERSION_FILE="$1"
+RENV_VERSION="$2"
+
+if [ -z "$RENV_VERSION" ] || [ -z "$RENV_VERSION_FILE" ]; then
+  echo "usage: Renv write-version-file FILENAME VERSION" >&2
+  exit 1
+fi
+
+# Make sure the specified version is installed.
+Renv-prefix "$RENV_VERSION" >/dev/null
+
+# Write the version out to disk.
+echo "$RENV_VERSION" > "$RENV_VERSION_FILE"

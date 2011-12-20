@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-echo $RBENV_ROOT
+echo $RENV_ROOT

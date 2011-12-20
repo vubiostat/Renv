@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+# Provide Renv completions
+if [ "$1" = "--complete" ]; then
+  echo --unset
+  echo system
+  exec Renv-versions --bare
+fi
+
+RENV_VERSION="$1"
+RENV_VERSION_FILE=".Renv-version"
+
+if [ "$RENV_VERSION" = "--unset" ]; then
+  rm -f "$RENV_VERSION_FILE"
+elif [ -n "$RENV_VERSION" ]; then
+  Renv-version-file-write "$RENV_VERSION_FILE" "$RENV_VERSION"
+else
+  Renv-version-file-read "$RENV_VERSION_FILE" ||
+  { echo "Renv: no local version configured for this directory"
+    exit 1
+  } >&2
+fi

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+# Provide Renv completions
+if [ "$1" = "--complete" ]; then
+  echo system
+  exec Renv-versions --bare
+fi
+
+RENV_VERSION="$1"
+RENV_VERSION_FILE="${RENV_ROOT}/version"
+
+if [ -n "$RENV_VERSION" ]; then
+  Renv-version-file-write "$RENV_VERSION_FILE" "$RENV_VERSION"
+else
+  Renv-version-file-read "$RENV_VERSION_FILE" ||
+  Renv-version-file-read "${RENV_ROOT}/global" ||
+  Renv-version-file-read "${RENV_ROOT}/default" ||
+  echo system
+fi

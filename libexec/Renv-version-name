@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+if [ -z "$RENV_VERSION" ]; then
+  RENV_VERSION_FILE="$(Renv-version-file)"
+  RENV_VERSION="$(Renv-version-file-read "$RENV_VERSION_FILE" || true)"
+fi
+
+if [ -z "$RENV_VERSION" ] || [ "$RENV_VERSION" = "system" ]; then
+  echo "system"
+  exit
+fi
+
+RENV_VERSION_PATH="${RENV_ROOT}/versions/${RENV_VERSION}"
+
+if [ -d "$RENV_VERSION_PATH" ]; then
+  echo "$RENV_VERSION"
+else
+  echo "Renv: version \`$RENV_VERSION' is not installed" >&2
+  exit 1
+fi

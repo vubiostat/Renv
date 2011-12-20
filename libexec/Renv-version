@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+echo "$(Renv-version-name) (set by $(Renv-version-origin))"

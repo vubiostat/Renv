@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
-SHIM_PATH="${RBENV_ROOT}/shims"
-PROTOTYPE_SHIM_PATH="${SHIM_PATH}/.rbenv-shim"
+SHIM_PATH="${RENV_ROOT}/shims"
+PROTOTYPE_SHIM_PATH="${SHIM_PATH}/.Renv-shim"
 
 # Create the shims directory if it doesn't already exist.
 mkdir -p "$SHIM_PATH"
 
-# Ensure only one instance of rbenv-rehash is running at a time by
+# Ensure only one instance of Renv-rehash is running at a time by
 # setting the shell's `noclobber` option and attempting to write to
 # the prototype shim file. If the file already exists, print a warning
 # to stderr and exit with a non-zero status.
 set -o noclobber
 { echo > "$PROTOTYPE_SHIM_PATH"
 } 2>/dev/null ||
-{ echo "rbenv: cannot rehash: $PROTOTYPE_SHIM_PATH exists"
+{ echo "Renv: cannot rehash: $PROTOTYPE_SHIM_PATH exists"
   exit 1
 } >&2
 set +o noclobber
@@ -29,7 +29,7 @@ remove_prototype_shim() {
 }
 
 # The prototype shim file is a script that re-execs itself, passing
-# its filename and any arguments to `rbenv exec`. This file is
+# its filename and any arguments to `Renv exec`. This file is
 # hard-linked for every binary and then removed. The linking technique
 # is fast, uses less disk space than unique files, and also serves as
 # a locking mechanism.
@@ -37,8 +37,8 @@ create_prototype_shim() {
   cat > "$PROTOTYPE_SHIM_PATH" <<SH
 #!/usr/bin/env bash
 set -e
-export RBENV_ROOT="$RBENV_ROOT"
-exec rbenv exec "\${0##*/}" "\$@"
+export RENV_ROOT="$RENV_ROOT"
+exec Renv exec "\${0##*/}" "\$@"
 SH
   chmod +x "$PROTOTYPE_SHIM_PATH"
 }
@@ -70,6 +70,6 @@ make_shims ../versions/*/bin/*
 # Restore the previous working directory.
 cd "$CUR_PATH"
 
-for script in $(rbenv-hooks rehash); do
+for script in $(Renv-hooks rehash); do
   source "$script"
 done

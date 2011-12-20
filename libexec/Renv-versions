@@ -1,24 +1,24 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
-RBENV_VERSION_NAME="$(rbenv-version-name)"
+RENV_VERSION_NAME="$(Renv-version-name)"
 
 if [ "$1" = "--bare" ]; then
   hit_prefix=""
   miss_prefix=""
-  print_version="$RBENV_VERSION_NAME"
+  print_version="$RENV_VERSION_NAME"
 else
   hit_prefix="* "
   miss_prefix="  "
-  print_version="$(rbenv-version)"
+  print_version="$(Renv-version)"
 fi
 
-for path in "${RBENV_ROOT}/versions/"*; do
+for path in "${RENV_ROOT}/versions/"*; do
   if [ -d "$path" ]; then
     version="${path##*/}"
 
-    if [ "$version" == "$RBENV_VERSION_NAME" ]; then
+    if [ "$version" == "$RENV_VERSION_NAME" ]; then
       echo "${hit_prefix}${print_version}"
     else
       echo "${miss_prefix}${version}"

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+# Provide Renv completions
+if [ "$1" = "--complete" ]; then
+  echo --unset
+  echo system
+  exec Renv-versions --bare
+fi
+
+version="$1"
+
+if [ -z "$version" ]; then
+  if [ -z "$RENV_VERSION" ]; then
+    echo "Renv: no shell-specific version configured" >&2
+    exit 1
+  else
+    echo "echo \"\$RENV_VERSION\""
+    exit
+  fi
+fi
+
+if [ "$version" = "--unset" ]; then
+  echo "unset RENV_VERSION"
+  exit 1
+fi
+
+# Make sure the specified version is installed.
+Renv-prefix "$version" >/dev/null
+
+echo "export RENV_VERSION=\"${version}\""

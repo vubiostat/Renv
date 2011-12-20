@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
-# Provide rbenv completions
+# Provide Renv completions
 if [ "$1" = "--complete" ]; then
   echo exec
   echo rehash
@@ -10,9 +10,9 @@ if [ "$1" = "--complete" ]; then
   exit
 fi
 
-RBENV_COMMAND="$1"
-if [ -z "$RBENV_COMMAND" ]; then
-  echo "usage: rbenv hooks COMMAND" >&2
+RENV_COMMAND="$1"
+if [ -z "$RENV_COMMAND" ]; then
+  echo "usage: Renv hooks COMMAND" >&2
   exit 1
 fi
 
@@ -36,8 +36,8 @@ realpath() {
 }
 
 shopt -s nullglob
-for path in ${RBENV_HOOK_PATH//:/$'\n'}; do
-  for script in $path/"$RBENV_COMMAND"/*.bash; do
+for path in ${RENV_HOOK_PATH//:/$'\n'}; do
+  for script in $path/"$RENV_COMMAND"/*.bash; do
     echo $(realpath $script)
   done
 done

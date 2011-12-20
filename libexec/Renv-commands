@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
-# Provide rbenv completions
+# Provide Renv completions
 if [ "$1" = "--complete" ]; then
   echo --sh
   echo --no-sh
@@ -20,8 +20,8 @@ fi
 shopt -s nullglob
 
 { for path in ${PATH//:/$'\n'}; do
-    for command in "${path}/rbenv-"*; do
-      command="${command##*rbenv-}"
+    for command in "${path}/Renv-"*; do
+      command="${command##*Renv-}"
       if [ -n "$sh" ]; then
         if [ ${command:0:3} = "sh-" ]; then
           echo ${command##sh-}

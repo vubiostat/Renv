@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+# Provide Renv completions
+if [ "$1" = "--complete" ]; then
+  echo system
+  exec Renv-versions --bare
+fi
+
+if [ -n "$1" ]; then
+  export RENV_VERSION="$1"
+elif [ -z "$RENV_VERSION" ]; then
+  RENV_VERSION="$(Renv-version-name)"
+fi
+
+if [ "$RENV_VERSION" = "system" ]; then
+  R_PATH="$(Renv-which R)"
+  echo "${R_PATH%/*}"
+  exit
+fi
+
+RENV_PREFIX_PATH="${RENV_ROOT}/versions/${RENV_VERSION}"
+if [ ! -d "$RENV_PREFIX_PATH" ]; then
+  echo "Renv: version \`${RENV_VERSION}' not installed" >&2
+  exit 1
+fi
+
+echo "$RENV_PREFIX_PATH"

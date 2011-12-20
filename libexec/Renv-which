@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
-# Provide rbenv completions
+# Provide Renv completions
 if [ "$1" = "--complete" ]; then
-  exec rbenv shims --short
+  exec Renv shims --short
 fi
 
 expand_path() {
@@ -37,34 +37,34 @@ remove_from_path() {
   echo "${result%:}"
 }
 
-RBENV_VERSION="$(rbenv-version-name)"
-RBENV_COMMAND="$1"
+RENV_VERSION="$(Renv-version-name)"
+RENV_COMMAND="$1"
 
-if [ -z "$RBENV_COMMAND" ]; then
-  echo "usage: rbenv which COMMAND" >&2
+if [ -z "$RENV_COMMAND" ]; then
+  echo "usage: Renv which COMMAND" >&2
   exit 1
 fi
 
-if [ "$RBENV_VERSION" = "system" ]; then
-  PATH="$(remove_from_path "${RBENV_ROOT}/shims")"
-  RBENV_COMMAND_PATH="$(command -v "$RBENV_COMMAND")"
+if [ "$RENV_VERSION" = "system" ]; then
+  PATH="$(remove_from_path "${RENV_ROOT}/shims")"
+  RENV_COMMAND_PATH="$(command -v "$RENV_COMMAND")"
 else
-  RBENV_COMMAND_PATH="${RBENV_ROOT}/versions/${RBENV_VERSION}/bin/${RBENV_COMMAND}"
+  RENV_COMMAND_PATH="${RENV_ROOT}/versions/${RENV_VERSION}/bin/${RENV_COMMAND}"
 fi
 
-for script in $(rbenv-hooks which); do
+for script in $(Renv-hooks which); do
   source "$script"
 done
 
-if [ -x "$RBENV_COMMAND_PATH" ]; then
-  echo "$RBENV_COMMAND_PATH"
+if [ -x "$RENV_COMMAND_PATH" ]; then
+  echo "$RENV_COMMAND_PATH"
 else
-  echo "rbenv: $RBENV_COMMAND: command not found" >&2
+  echo "Renv: $RENV_COMMAND: command not found" >&2
 
-  versions="$(rbenv-whence "$RBENV_COMMAND" || true)"
+  versions="$(Renv-whence "$RENV_COMMAND" || true)"
   if [ -n "$versions" ]; then
     { echo
-      echo "The \`$1' command exists in these Ruby versions:"
+      echo "The \`$1' command exists in these R versions:"
       echo "$versions" | sed 's/^/  /g'
       echo
     } >&2

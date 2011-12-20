@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-[ -n "$RBENV_DEBUG" ] && set -x
+[ -n "$RENV_DEBUG" ] && set -x
 
 resolve_link() {
   $(type -p greadlink readlink | head -1) "$1"
@@ -20,34 +20,34 @@ abs_dirname() {
   cd "$cwd"
 }
 
-if [ -z "${RBENV_ROOT}" ]; then
-  RBENV_ROOT="${HOME}/.rbenv"
+if [ -z "${RENV_ROOT}" ]; then
+  RENV_ROOT="${HOME}/.Renv"
 else
-  RBENV_ROOT="${RBENV_ROOT%/}"
+  RENV_ROOT="${RENV_ROOT%/}"
 fi
-export RBENV_ROOT
+export RENV_ROOT
 
-if [ -z "${RBENV_DIR}" ]; then
-  RBENV_DIR="$(pwd)"
+if [ -z "${RENV_DIR}" ]; then
+  RENV_DIR="$(pwd)"
 else
-  RBENV_DIR="$(abs_dirname "$RBENV_DIR")"
+  RENV_DIR="$(abs_dirname "$RENV_DIR")"
 fi
-export RBENV_DIR
+export RENV_DIR
 
 
 shopt -s nullglob
 
 bin_path="$(abs_dirname "$0")"
-for plugin_bin in "${RBENV_ROOT}/plugins/"*/bin; do
+for plugin_bin in "${RENV_ROOT}/plugins/"*/bin; do
   bin_path="${bin_path}:${plugin_bin}"
 done
 export PATH="${bin_path}:${PATH}"
 
-hook_path="${RBENV_HOOK_PATH}:${RBENV_ROOT}/rbenv.d:/usr/local/etc/rbenv.d:/etc/rbenv.d"
-for plugin_hook in "${RBENV_ROOT}/plugins/"*/etc/rbenv.d; do
+hook_path="${RENV_HOOK_PATH}:${RENV_ROOT}/Renv.d:/usr/local/etc/Renv.d:/etc/Renv.d"
+for plugin_hook in "${RENV_ROOT}/plugins/"*/etc/Renv.d; do
   hook_path="${hook_path}:${plugin_hook}"
 done
-export RBENV_HOOK_PATH="$hook_path"
+export RENV_HOOK_PATH="$hook_path"
 
 shopt -u nullglob
 
@@ -55,12 +55,12 @@ shopt -u nullglob
 command="$1"
 case "$command" in
 "" | "-h" | "--help" )
-  echo -e "rbenv 0.2.1\n$(rbenv-help)" >&2
+  echo -e "Renv 0.2.1\n$(Renv-help)" >&2
   ;;
 * )
-  command_path="$(command -v "rbenv-$command" || true)"
+  command_path="$(command -v "Renv-$command" || true)"
   if [ -z "$command_path" ]; then
-    echo "rbenv: no such command \`$command'" >&2
+    echo "Renv: no such command \`$command'" >&2
     exit 1
   fi
 

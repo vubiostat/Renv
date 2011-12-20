@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -e
+[ -n "$RENV_DEBUG" ] && set -x
+
+root="$RENV_DIR"
+while [ -n "$root" ]; do
+  if [ -e "${root}/.Renv-version" ]; then
+    echo "${root}/.Renv-version"
+    exit
+  fi
+  root="${root%/*}"
+done
+
+global_version_file="${RENV_ROOT}/version"
+
+if [ -e "$global_version_file" ]; then
+  echo "$global_version_file"
+elif [ -e "${RENV_ROOT}/global" ]; then
+  echo "${RENV_ROOT}/global"
+elif [ -e "${RENV_ROOT}/default" ]; then
+  echo "${RENV_ROOT}/default"
+else
+  echo "$global_version_file"
+fi
