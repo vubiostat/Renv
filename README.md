@@ -28,8 +28,8 @@ tools that do one thing well.
       * [3.7 Renv which](#section_3.7)
       * [3.8 Renv whence](#section_3.8)
    * [4 Development](#section_4)
-   * [5 History](#section_5)
-      * [5.1 License](#section_5.1)
+      * [4.1 History](#section_4.1)
+      * [4.2 License](#section_4.2)
 
 ## <a name="section_1"></a> 1 How It Works
 
@@ -253,11 +253,11 @@ and easy to understand, even if you're not a shell hacker.
 Please feel free to submit pull requests and file bugs on the [issue
 tracker](https://github.com/viking/Renv/issues).
 
-## <a name="section_5"></a> 5 History
+### <a name="section_4.1"></a> 4.1 History
 
 Renv is a forked version of [rbenv](https://github.com/sstephenson/rbenv).
 
-### <a name="section_5.1"></a> 5.1 License
+### <a name="section_4.2"></a> 4.2 License
 
 (The MIT license)
 
