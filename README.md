@@ -88,6 +88,8 @@ easy to fork and contribute any changes back upstream.
         $ make
         $ make install
 
+   You can also use [R-build](https://github.com/viking/R-build) to build and install R versions.
+
 6. Rebuild the shim binaries. You should do this any time you install
    a new R binary (for example, when installing a new R version).
 
