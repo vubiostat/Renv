@@ -13,7 +13,25 @@ tools that do one thing well.
 
 ## Table of Contents
 
-## How It Works ##
+   * [1 How It Works](#section_1)
+   * [2 Installation](#section_2)
+      * [2.1 Basic GitHub Checkout](#section_2.1)
+         * [2.1.1 Upgrading](#section_2.1.1)
+      * [2.2 Neckbeard Configuration](#section_2.2)
+   * [3 Usage](#section_3)
+      * [3.1 Renv global](#section_3.1)
+      * [3.2 Renv local](#section_3.2)
+      * [3.3 Renv shell](#section_3.3)
+      * [3.4 Renv versions](#section_3.4)
+      * [3.5 Renv version](#section_3.5)
+      * [3.6 Renv rehash](#section_3.6)
+      * [3.7 Renv which](#section_3.7)
+      * [3.8 Renv whence](#section_3.8)
+   * [4 Development](#section_4)
+      * [4.1 History](#section_4.1)
+      * [4.2 License](#section_4.2)
+
+## <a name="section_1"></a> 1 How It Works
 
 Renv operates on the per-user directory `~/.Renv`. Version names in
 Renv correspond to subdirectories of `~/.Renv/versions`. For
@@ -33,9 +51,9 @@ and then execute the corresponding binary.
 Because of the simplicity of the shim approach, all you need to use
 Renv is `~/.Renv/shims` in your `$PATH`.
 
-## Installation ##
+## <a name="section_2"></a> 2 Installation
 
-### Basic GitHub Checkout ###
+### <a name="section_2.1"></a> 2.1 Basic GitHub Checkout
 
 This will get you going with the latest version of Renv and make it
 easy to fork and contribute any changes back upstream.
@@ -77,7 +95,7 @@ easy to fork and contribute any changes back upstream.
 
         $ Renv rehash
 
-#### Upgrading ####
+#### <a name="section_2.1.1"></a> 2.1.1 Upgrading
 
 If you've installed Renv using the instructions above, you can
 upgrade your installation at any time using git.
@@ -99,7 +117,7 @@ tag:
     v0.2.0
     $ git checkout v0.2.0
 
-### Neckbeard Configuration ###
+### <a name="section_2.2"></a> 2.2 Neckbeard Configuration
 
 Skip this section unless you must know what every line in your shell
 profile is doing.
@@ -131,12 +149,12 @@ opposed to this idea. Here's what `Renv init` actually does:
 Run `Renv init -` for yourself to see exactly what happens under the
 hood.
 
-## Usage ##
+## <a name="section_3"></a> 3 Usage
 
 Like `git`, the `Renv` command delegates to subcommands based on its
 first argument. The most common subcommands are:
 
-### Renv global ###
+### <a name="section_3.1"></a> 3.1 Renv global
 
 Sets the global version of R to be used in all shells by writing
 the version name to the `~/.Renv/version` file. This version can be
@@ -151,7 +169,7 @@ The special version name `system` tells Renv to use the system R
 When run without a version number, `Renv global` reports the
 currently configured global version.
 
-### Renv local ###
+### <a name="section_3.2"></a> 3.2 Renv local
 
 Sets a local per-project R version by writing the version name to
 an `.Renv-version` file in the current directory. This version
@@ -166,7 +184,7 @@ configured local version. You can also unset the local version:
 
     $ Renv local --unset
 
-### Renv shell ###
+### <a name="section_3.3"></a> 3.3 Renv shell
 
 Sets a shell-specific R version by setting the `RENV_VERSION`
 environment variable in your shell. This version overrides both
@@ -186,7 +204,7 @@ prefer not to use shell integration, you may simply set the
 
     $ export RENV_VERSION=2.13.2
 
-### Renv versions ###
+### <a name="section_3.4"></a> 3.4 Renv versions
 
 Lists all R versions known to Renv, and shows an asterisk next to
 the currently active version.
@@ -196,7 +214,7 @@ the currently active version.
       2.11.1
     * 2.14.0 (set by /Users/sam/.Renv/global)
 
-### Renv version ###
+### <a name="section_3.5"></a> 3.5 Renv version
 
 Displays the currently active R version, along with information on
 how it was set.
@@ -204,7 +222,7 @@ how it was set.
     $ Renv version
     2.14.0 (set by /home/viking/Projects/yaml/.Renv-version)
 
-### Renv rehash ###
+### <a name="section_3.6"></a> 3.6 Renv rehash
 
 Installs shims for all R binaries known to Renv (i.e.,
 `~/.Renv/versions/*/bin/*`). Run this command after you install a new
@@ -212,7 +230,7 @@ version of R.
 
     $ Renv rehash
 
-### Renv which ###
+### <a name="section_3.7"></a> 3.7 Renv which
 
 Displays the full path to the binary that Renv will execute when you
 run the given command.
@@ -220,7 +238,7 @@ run the given command.
     $ Renv which irb
     /home/viking/.Renv/versions/2.14.0/bin/R
 
-### Renv whence ###
+### <a name="section_3.8"></a> 3.8 Renv whence
 
 Lists all R versions with the given command installed.
 
@@ -228,7 +246,7 @@ Lists all R versions with the given command installed.
     2.13.2
     2.14.0
 
-## Development ##
+## <a name="section_4"></a> 4 Development
 
 The Renv source code is [hosted on
 GitHub](https://github.com/viking/Renv). It's clean, modular,
@@ -237,11 +255,11 @@ and easy to understand, even if you're not a shell hacker.
 Please feel free to submit pull requests and file bugs on the [issue
 tracker](https://github.com/viking/Renv/issues).
 
-### History ###
+### <a name="section_4.1"></a> 4.1 Version History
 
 Renv is a forked version of [rbenv](https://github.com/sstephenson/rbenv).
 
-### License ###
+### <a name="section_4.2"></a> 4.2 License
 
 (The MIT license)
 

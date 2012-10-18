@@ -30,7 +30,12 @@ export RENV_ROOT
 if [ -z "${RENV_DIR}" ]; then
   RENV_DIR="$(pwd)"
 else
-  RENV_DIR="$(abs_dirname "$RENV_DIR")"
+  cd "$RENV_DIR" 2>/dev/null || {
+    echo "Renv: cannot change working directory to \`$RENV_DIR'"
+    exit 1
+  } >&2
+  RENV_DIR="$(pwd)"
+  cd "$OLDPWD"
 fi
 export RENV_DIR
 
@@ -43,7 +48,7 @@ for plugin_bin in "${RENV_ROOT}/plugins/"*/bin; do
 done
 export PATH="${bin_path}:${PATH}"
 
-hook_path="${RENV_HOOK_PATH}:${RENV_ROOT}/Renv.d:/usr/local/etc/Renv.d:/etc/Renv.d"
+hook_path="${RENV_HOOK_PATH}:${RENV_ROOT}/Renv.d:/usr/local/etc/Renv.d:/etc/Renv.d:/usr/lib/Renv/hooks"
 for plugin_hook in "${RENV_ROOT}/plugins/"*/etc/Renv.d; do
   hook_path="${hook_path}:${plugin_hook}"
 done
@@ -55,7 +60,7 @@ shopt -u nullglob
 command="$1"
 case "$command" in
 "" | "-h" | "--help" )
-  echo -e "Renv 0.2.1\n$(Renv-help)" >&2
+  echo -e "Renv 0.3.0\n$(Renv-help)" >&2
   ;;
 * )
   command_path="$(command -v "Renv-$command" || true)"

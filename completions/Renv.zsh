@@ -1,3 +1,7 @@
+if [[ ! -o interactive ]]; then
+    return
+fi
+
 compctl -K _Renv Renv
 
 _Renv() {

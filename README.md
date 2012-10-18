@@ -255,7 +255,7 @@ and easy to understand, even if you're not a shell hacker.
 Please feel free to submit pull requests and file bugs on the [issue
 tracker](https://github.com/viking/Renv/issues).
 
-### <a name="section_4.1"></a> 4.1 History
+### <a name="section_4.1"></a> 4.1 Version History
 
 Renv is a forked version of [rbenv](https://github.com/sstephenson/rbenv).
 

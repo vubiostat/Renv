@@ -3,10 +3,19 @@ set -e
 [ -n "$RENV_DEBUG" ] && set -x
 
 print=""
-if [ "$1" = "-" ]; then
-  print=1
-  shift
-fi
+no_rehash=""
+for args in "$@"
+do
+  if [ "$args" = "-" ]; then
+    print=1
+		shift
+  fi
+
+  if [ "$args" = "--no-rehash" ]; then
+    no_rehash=1
+    shift
+  fi
+done
 
 shell="$1"
 if [ -z "$shell" ]; then
@@ -41,6 +50,9 @@ if [ -z "$print" ]; then
   zsh )
     profile='~/.zshrc'
     ;;
+  ksh )
+    profile='~/.profile'
+    ;;
   * )
     profile='your profile'
     ;;
@@ -66,13 +78,15 @@ bash | zsh )
   ;;
 esac
 
-echo 'Renv rehash 2>/dev/null'
+if [ -z "$no_rehash" ]; then
+  echo 'Renv rehash 2>/dev/null'
+fi
 
 commands=(`Renv commands --sh`)
 IFS="|"
 cat <<EOS
-function Renv() {
-  command="\$1"
+Renv() {
+  local command="\$1"
   if [ "\$#" -gt 0 ]; then
     shift
   fi
