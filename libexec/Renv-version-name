@@ -7,6 +7,13 @@ if [ -z "$RENV_VERSION" ]; then
   RENV_VERSION="$(Renv-version-file-read "$RENV_VERSION_FILE" || true)"
 fi
 
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`Renv-hooks version-name`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
+  source "$script"
+done
+
 if [ -z "$RENV_VERSION" ] || [ "$RENV_VERSION" = "system" ]; then
   echo "system"
   exit
