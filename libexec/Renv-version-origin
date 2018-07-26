@@ -2,7 +2,18 @@
 set -e
 [ -n "$RENV_DEBUG" ] && set -x
 
-if [ -n "$RENV_VERSION" ]; then
+unset RENV_VERSION_ORIGIN
+
+OLDIFS="$IFS"
+IFS=$'\n' scripts=(`Renv-hooks version-origin`)
+IFS="$OLDIFS"
+for script in "${scripts[@]}"; do
+  source "$script"
+done
+
+if [ -n "$RENV_VERSION_ORIGIN" ]; then
+  echo "$RENV_VERSION_ORIGIN"  
+elif [ -n "$RENV_VERSION" ]; then
   echo "RENV_VERSION environment variable"
 else
   Renv-version-file

@@ -60,7 +60,7 @@ shopt -u nullglob
 command="$1"
 case "$command" in
 "" | "-h" | "--help" )
-  echo -e "Renv 0.3.0\n$(Renv-help)" >&2
+  echo -e "Renv 0.3.1\n$(Renv-help)" >&2
   ;;
 * )
   command_path="$(command -v "Renv-$command" || true)"
