@@ -60,8 +60,7 @@ easy to fork and contribute any changes back upstream.
 
 1. Check out Renv into `~/.Renv`.
 
-        $ cd
-        $ git clone git://github.com/viking/Renv.git .Renv
+        $ git clone https://github.com/viking/Renv.git ~/.Renv
 
 2. Add `~/.Renv/bin` to your `$PATH` for access to the `Renv`
    command-line utility.
